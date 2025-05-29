@@ -7,9 +7,9 @@ double showOffset(int xlDate)
     const int minutes = 15;
     // epoch is  1-Jan-1970 UTC
     // excel for 1-Jan-1970 is 25569
-    std::chrono::seconds seconds_since_epoch((xlDate - 25569) * 24 * 3600 + hours * 3600 + minutes * 60);
-    std::chrono::system_clock::time_point tp(seconds_since_epoch);
-    auto now = std::chrono::system_clock::now();
+    std::chrono::seconds seconds_since_epoch = std::chrono::days(xlDate - 25569) + std::chrono::hours(hours) + std::chrono::minutes(minutes);
+    std::chrono::system_clock::time_point tp(seconds_since_epoch); // Should get a timepoint as excel date, 12:15 UTC
+    auto now = std::chrono::system_clock::now();                   // For comparison
     std::chrono::zoned_time zt("America/New_York", tp);
     double offset = zt.get_info().offset.count() / 3600.0;
     return offset;
