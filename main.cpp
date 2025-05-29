@@ -1,6 +1,23 @@
 #include <chrono>
 #include <iostream>
 
+void debugConversion()
+{
+    const int xlDate = 45806; // Example date in Julian format for today (29-May-2025)
+    const int hours = 12;
+    const int minutes = 15;
+    // epoch is  1-Jan-1970 UTC
+    // excel for 1-Jan-1970 is 25569
+    std::chrono::seconds seconds_since_epoch = std::chrono::days(xlDate - 25569) + std::chrono::hours(hours) + std::chrono::minutes(minutes);
+    std::chrono::system_clock::time_point tp(seconds_since_epoch); // Should get a timepoint as excel date, 12:15 UTC
+    auto now = std::chrono::system_clock::now();                   // For comparison
+
+    std::cout << "now: " << now << std::endl; // Current time in UTC
+    std::cout << "tp : " << tp << std::endl; // Timepoint for the Excel date
+}
+
+
+
 double showOffset(int xlDate)
 {
     const int hours = 12;
@@ -36,6 +53,7 @@ int main() {
 
     try
     {
+        debugConversion();
         test_range();
         return 0;
 
