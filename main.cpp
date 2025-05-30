@@ -1,6 +1,10 @@
 #include <chrono>
 #include <iostream>
 
+#include <stdexcept>
+#include <system_error>
+
+
 void debugConversion()
 {
     const int xlDate = 45806; // Example date in Julian format for today (29-May-2025)
@@ -48,11 +52,33 @@ void test_range()
     }
 }
 
+void test_exception()
+{
+    try
+    {
+        std::cout << "Testing exception handling..." << std::endl;
+        auto ec = std::error_code(126, std::system_category());
+        throw std::system_error(ec);
+    }
+    catch (const std::system_error& e)
+    {
+        std::cerr << "Exception: " << e.what() << " | type: " << typeid(e).name() << " " << e.code() << std::endl;
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Exception: " << e.what() << " | type: " << typeid(e).name() << std::endl;
+    }
+}
+
 
 int main() {
 
     try
     {
+        //throw std::file("Test"); // Uncomment to test exception handling
+       // throw std::runtime_error("Test"); // Uncomment to test exception handling
+        test_exception();
+
         debugConversion();
         test_range();
         return 0;
@@ -80,15 +106,17 @@ int main() {
 
         std::cout << zt.get_info().offset << std::endl;
     }
+    catch (const std::system_error& e)
+    {
+        std::cerr << "Exception: " << e.what() << " | type: " << typeid(e).name() << " " << e.code() << std::endl;
+    }
     catch (const std::exception& e)
     {
-        std::cerr << "Exception: " << e.what() << std::endl;
-        return 1;
+        std::cerr << "Exception: " << e.what()  << " | type: " << typeid(e).name() << std::endl;
     }
     catch (...)
     {
         std::cerr << "Unknown exception occurred." << std::endl;
-        return 1;
     }
 
 
