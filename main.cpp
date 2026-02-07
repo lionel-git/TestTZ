@@ -7,6 +7,7 @@
 
 void debugConversion()
 {
+    std::cout << "\n === Debug conversion" << std::endl;
     const int xlDate = 45806; // Example date in Julian format for today (29-May-2025)
     const int hours = 12;
     const int minutes = 15;
@@ -18,6 +19,7 @@ void debugConversion()
 
     std::cout << "now: " << now << std::endl; // Current time in UTC
     std::cout << "tp : " << tp << std::endl; // Timepoint for the Excel date
+    std::cout << " === Debug conversion" << std::endl;
 }
 
 
@@ -38,36 +40,43 @@ double showOffset(int xlDate)
 
 void test_range()
 {
+    std::cout << "\n === Test Range (with Time Zone)" << std::endl;
     const int start = 45806; // 29-May-2025
 
     double prevOffset = 0;
     for (int i = start; i > start-365; --i)
     {
-        double newOffset = showOffset(i);
+        double newOffset = showOffset(i); 
         if (std::abs(newOffset - prevOffset) > 0.01)
         {
             std::cout << "Date: " << i << ", Offset: " << newOffset << " hours" << std::endl;
         }
         prevOffset = newOffset;
     }
+    std::cout << " === Test Range" << std::endl;
 }
 
 void test_exception()
 {
     try
     {
-        std::cout << "Testing exception handling..." << std::endl;
-        auto ec = std::error_code(126, std::system_category());
-        throw std::system_error(ec);
-    }
-    catch (const std::system_error& e)
-    {
-        std::cerr << "Exception: " << e.what() << " | type: " << typeid(e).name() << " " << e.code() << std::endl;
-    }
+        try
+        {
+            std::cout << "\n ========== Testing exception handling, system error code 126.." << std::endl;
+            auto ec = std::error_code(126, std::system_category());
+            throw std::system_error(ec);
+        }
+        catch (const std::system_error& e)
+        {
+            std::cerr << "Catch as system exception: " << e.what() << " | type: " << typeid(e).name() << " " << e.code() << std::endl;
+            throw;
+        }
+    }    
     catch (const std::exception& e)
     {
-        std::cerr << "Exception: " << e.what() << " | type: " << typeid(e).name() << std::endl;
+        std::cerr << "Catch as exception: " << e.what() << " | type: " << typeid(e).name() << std::endl;
     }
+    std::cout << " ========== End Testing exception handling..." << std::endl;
 }
 
 
