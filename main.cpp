@@ -80,8 +80,9 @@ void test_exception()
 }
 
 
-int main() {
-
+int main() 
+{
+    bool rethrowToOS = true;
     try
     {
         //throw std::file("Test"); // Uncomment to test exception handling
@@ -118,17 +119,20 @@ int main() {
     catch (const std::system_error& e)
     {
         std::cerr << "Exception: " << e.what() << " | type: " << typeid(e).name() << " " << e.code() << std::endl;
+        if (rethrowToOS)
+            throw;
     }
     catch (const std::exception& e)
     {
         std::cerr << "Exception: " << e.what()  << " | type: " << typeid(e).name() << std::endl;
+        if (rethrowToOS)
+            throw;
     }
     catch (...)
     {
         std::cerr << "Unknown exception occurred." << std::endl;
+        if (rethrowToOS)
+            throw;
     }
-
-
-
     return 0;
 }
