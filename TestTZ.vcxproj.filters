@@ -25,4 +25,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="make.bash">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="make_clang.bash">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>
