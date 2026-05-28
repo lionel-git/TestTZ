@@ -79,18 +79,25 @@ void test_exception()
     std::cout << " ========== End Testing exception handling..." << std::endl;
 }
 
+void test_tzdb();
 
 int main() 
 {
     bool rethrowToOS = true;
     try
     {
+        test_tzdb(); return 0;
+
         //throw std::file("Test"); // Uncomment to test exception handling
        // throw std::runtime_error("Test"); // Uncomment to test exception handling
         test_exception();
 
         debugConversion();
         test_range();
+
+        std::cout << "Press a key to continue..." << std::endl;
+        int c = std::cin.get();
+
         return 0;
 
 
