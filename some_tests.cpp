@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <system_error>
 
-#include <icu.h>
+//#include <icu.h>
 //#include <icucommon.h>
 
 namespace toto
